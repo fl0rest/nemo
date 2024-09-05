@@ -12,17 +12,13 @@ def countIP(filename):
     for ip in ips:
         times = ips.count(ip)
         counted.append((times, ip))
-        ips = [ value for value in ips if value != ip]
+        ips = [value for value in ips if value != ip]
 
     counted_s = sorted(counted, key=lambda x: x[0], reverse=True)
+    counted_s = filter(lambda x: x[0] != 0, counted_s)
 
-    print(counted_s[1])
-    
-    # c=0
-    # for i in counted_s:
-    #     print(counted_s[c])
-    #     c += 1
-
+    for i in counted_s:
+        print(i[0], f"{i[1]}")
 
 
 def main():
