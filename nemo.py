@@ -1,7 +1,9 @@
 from logparse import Logparse as lp
+import sys
 
 def main():
-    lp.count_single("transfer.log", "code")
+    field = sys.argv[1]
+    lp.count_single("transfer.log", field)
 
 
 if __name__ == "__main__":
