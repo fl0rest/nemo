@@ -1,0 +1,3 @@
+# REQUIRMENTS
+
+python3.10 <- MINIMUM

@@ -24,7 +24,6 @@ class Logparse:
                 case "size":
                     for line in log:
                         values.append(lpg.getSize(line))
-                    
 
         values.sort(reverse=True)
 
