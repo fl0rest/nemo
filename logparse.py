@@ -1,45 +1,40 @@
+from logparse_get import LogparseGet as lpg
+
+
 class Logparse:
 
     @staticmethod
-    def getIP(input):
-        addrs = input.split("-")[0].strip()
-        addrs = addrs.split()
-        try:
-            if len(addrs) > 1:
-                origin = len(addrs) - 1
-                return f"{addrs[origin]}-X"
-            else:
-                return addrs[0]
-        except IndexError:
-            return "There is no IP"
+    def count_single(filename, field):
+        values = []
+        counted = []
+        with open(filename) as log:
+            match field:
+                case "ip":
+                    for line in log:
+                        values.append(lpg.getIP(line))
+                case "ua":
+                    for line in log:
+                        values.append(lpg.getUA(line))
+                case "ref":
+                    for line in log:
+                        values.append(lpg.getRef(line))
+                case "code":
+                    for line in log:
+                        values.append(lpg.getHTTP(line))
+                case "size":
+                    for line in log:
+                        values.append(lpg.getSize(line))
+                    
 
-    @staticmethod
-    def getUA(input):
-        rev = input[::-1]
-        ua = rev.split('"')[1][::-1]
-        return ua
+        values.sort(reverse=True)
 
-    @staticmethod
-    def getHTTP(input):
-        code = input.split('"')[2]
-        code = code.split()[0]
-        return int(code)
+        for v in values:
+            times = values.count(v)
+            counted.append((times, v))
+            values = [value for value in values if value != v]
 
-    @staticmethod
-    def getRef(input):
-        rev = input[::-1]
-        ref = rev.split('"')[3][::-1]
-        return ref
+        counted_s = sorted(counted, key=lambda x: x[0], reverse=True)
+        counted_s = filter(lambda x: x[0] != 0, counted_s)
 
-    @staticmethod
-    def getSize(input):
-        size = input.split('"')[2]
-        size = size.split()[1]
-        if size == "-":
-            return int(0)
-        else:
-            return int(size)
-
-    @staticmethod
-    def noDupe(input):
-        return list(dict.fromkeys(input))
+        for i in counted_s:
+            print(i[0], f"{i[1]}")

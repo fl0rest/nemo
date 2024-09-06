@@ -1,28 +1,7 @@
 from logparse import Logparse as lp
 
-
-def countIP(filename):
-    ips = []
-    counted = []
-    with open(filename) as log:
-        for line in log:
-            ips.append(lp.getIP(line))
-    ips.sort(reverse=True)
-
-    for ip in ips:
-        times = ips.count(ip)
-        counted.append((times, ip))
-        ips = [value for value in ips if value != ip]
-
-    counted_s = sorted(counted, key=lambda x: x[0], reverse=True)
-    counted_s = filter(lambda x: x[0] != 0, counted_s)
-
-    for i in counted_s:
-        print(i[0], f"{i[1]}")
-
-
 def main():
-    countIP("transfer.log")
+    lp.count_single("transfer.log", "code")
 
 
 if __name__ == "__main__":
