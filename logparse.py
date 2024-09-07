@@ -37,6 +37,12 @@ class Logparse:
                     case "size":
                         for line in log:
                             values.append(lpg.getSize(line))
+                    case "url":
+                        for line in log:
+                            values.append(lpg.getURL(line))
+                    case "method":
+                        for line in log:
+                            values.append(lpg.getMethod(line))
         except FileNotFoundError:
             print("File not found")
 
@@ -52,8 +58,12 @@ class Logparse:
                     temp: list = []
                     if "ip" in fields:
                         temp.append(lpg.getIP(line))
+                    if "method" in fields:
+                        temp.append(lpg.getMethod(line))
                     if "code" in fields:
                         temp.append(lpg.getHTTP(line))
+                    if "url" in fields:
+                        temp.append(lpg.getURL(line))
                     if "ua" in fields:
                         temp.append(lpg.getUA(line))
                     if "ref" in fields:

@@ -4,8 +4,8 @@ import argparse
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("field", help="Field to parse [ip|ua|ref|code|size]",\
-                        choices=['ip','ua','ref','code','size'], nargs='+')
+    parser.add_argument("field", help="Field to parse [ip|ua|ref|code|size|url|method]",\
+                        choices=['ip','ua','ref','code','size','url',"method"], nargs='+')
     parser.add_argument("-f", "--file", help="path to file, default ./access.log")
     parser.parse_args()
     args = parser.parse_args()
