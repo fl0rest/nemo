@@ -6,13 +6,16 @@ class Logparse:
     @staticmethod
     def count_sort(input: list) -> list:
         counted: list = []
-        for v in input:
-            times: int = input.count(v)
-            counted.append((times, v))
-            input = [value for value in input if value != v]
+        for item in input:
+            times: int = input.count(item)
+            if type(item) == list:
+                counted.append((times, *item))
+            else:
+                counted.append((times, item))
+            input = [value for value in input if value != item]
 
         counted_s: list = sorted(counted, key=lambda x: x[0], reverse=True)
-        counted_s = filter(lambda x: x[0] != 0, counted_s)
+        counted_s = list(filter(lambda x: x[0] != 0, counted_s))
 
         return counted_s
 

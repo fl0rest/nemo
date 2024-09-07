@@ -16,11 +16,15 @@ def main():
 
     if len(args.field) == 1:
         out: list = lp.count_single(file, args.field[0])
+        for i in out:
+            print(i[0], f"\t{i[1]}")
     else:
         out: list = lp.count_more(file, args.field)
 
-    for i in out:
-        print(i[0], f"\t{i[1]}")
+        for line in out:
+            for item in range(len(line)):
+                print(f"{line[item]}\t", end="")
+            print()
 
 if __name__ == "__main__":
     main()
