@@ -41,8 +41,29 @@ class Logparse:
             print("File not found")
 
         counted_s: list = Logparse.count_sort(values)
+        return counted_s
 
-        # for i in counted_s:
-        #     print(i[0], f"{i[1]}")
+    @staticmethod
+    def count_more(filename: str, fields: list) -> list:
+        values: list = []
+        try:
+            with open(filename) as log:
+                for line in log:
+                    temp: list = []
+                    if "ip" in fields:
+                        temp.append(lpg.getIP(line))
+                    if "code" in fields:
+                        temp.append(lpg.getUA(line))
+                    if "ua" in fields:
+                        temp.append(lpg.getHTTP(line))
+                    if "ref" in fields:
+                        temp.append(lpg.getRef(line))
+                    if "size" in fields:
+                        temp.append(lpg.getSize(line))
+                    values.append(temp)
 
+        except FileNotFoundError:
+            print("File not found")
+
+        counted_s: list = Logparse.count_sort(values)
         return counted_s

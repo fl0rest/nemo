@@ -5,7 +5,7 @@ import argparse
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("field", help="Field to parse [ip|ua|ref|code|size]",\
-                        choices=['ip','ua','ref','code','size'], type=str)
+                        choices=['ip','ua','ref','code','size'], nargs='+')
     parser.add_argument("-f", "--file", help="path to file, default ./access.log")
     parser.parse_args()
     args = parser.parse_args()
@@ -14,7 +14,10 @@ def main():
     if args.file:
         file = args.file
 
-    out: list = lp.count_single(file, args.field)
+    if len(args.field) == 1:
+        out: list = lp.count_single(file, args.field[0])
+    else:
+        out: list = lp.count_more(file, args.field)
 
     for i in out:
         print(i[0], f"\t{i[1]}")
