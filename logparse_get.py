@@ -51,3 +51,10 @@ class LogparseGet:
         method = input.split('"')[1]
         method = method.split(" ")[0]
         return method
+
+    @staticmethod
+    def getSearch(filename: str, search: str) -> str:
+        with open(filename) as log:
+            for line in log:
+                if search in line:
+                    return line

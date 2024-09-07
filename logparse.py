@@ -20,12 +20,20 @@ class Logparse:
         return counted_s
 
     @staticmethod
-    def count_single(filename: str, field: str) -> list:
+    def count_single(filename: str, field: str, search: str = None) -> list:
         values: list = []
         try:
-            with open(filename) as log:
+            with open(filename) as log_raw:
+                if search != None:
+                    log: list = []
+                    for line in log_raw:
+                        log.append(lpg.getSearch(search, line))
+                else:
+                    for line in log_raw:
+                        log.append(line)
                 match field:
                     case "ip":
+                        print(filename)
                         for line in log:
                             values.append(lpg.getIP(line))
                     case "ua":
@@ -46,8 +54,8 @@ class Logparse:
                     case "method":
                         for line in log:
                             values.append(lpg.getMethod(line))
-        except FileNotFoundError:
-            print("File not found")
+        except Exception as error:
+            print(error)
 
         counted_s: list = Logparse.count_sort(values)
         return counted_s
@@ -56,8 +64,8 @@ class Logparse:
     def count_more(filename: str, fields: list) -> list:
         values: list = []
         try:
-            with open(filename) as log:
-                for line in log:
+            with open(filename) as log_raw:
+                for line in log_raw:
                     temp: list = []
                     if "ip" in fields:
                         temp.append(lpg.getIP(line))

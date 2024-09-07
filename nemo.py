@@ -1,12 +1,14 @@
 from logparse import Logparse as lp
+from logparse_get import LogparseGet as lpg
 import argparse
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("field", help="Field to parse [ip|ua|ref|code|size|url|method]",\
-                        choices=['ip','ua','ref','code','size','url',"method"], nargs='+')
-    parser.add_argument("-f", "--file", help="path to file, default ./access.log")
+                        choices=['ip','ua','ref','code','size','url',"method"], nargs='*')
+    parser.add_argument("-f", "--file", help="Path to file, default ./access.log")
+    parser.add_argument("-s", "--search", help="String to search for", type=str)
     parser.parse_args()
     args = parser.parse_args()
 
@@ -15,7 +17,7 @@ def main():
         file = args.file
 
     if len(args.field) == 1:
-        out: list = lp.count_single(file, args.field[0])
+        out: list = lp.count_single(file, args.field[0], args.search)
         for i in out:
             print(i[0], f"\t{i[1]}")
     else:
