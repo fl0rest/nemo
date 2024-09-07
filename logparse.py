@@ -53,9 +53,9 @@ class Logparse:
                     if "ip" in fields:
                         temp.append(lpg.getIP(line))
                     if "code" in fields:
-                        temp.append(lpg.getUA(line))
-                    if "ua" in fields:
                         temp.append(lpg.getHTTP(line))
+                    if "ua" in fields:
+                        temp.append(lpg.getUA(line))
                     if "ref" in fields:
                         temp.append(lpg.getRef(line))
                     if "size" in fields:
