@@ -1,3 +1,6 @@
+import re
+
+
 class LogparseGet:
 
     @staticmethod
@@ -53,8 +56,7 @@ class LogparseGet:
         return method
 
     @staticmethod
-    def getSearch(filename: str, search: str) -> str:
-        with open(filename) as log:
-            for line in log:
-                if search in line:
-                    return line
+    def getSearch(search: str, line: str) -> str:
+        search_r = re.compile(search)
+        if type(re.search(search_r, line)) != type(None):
+            return line

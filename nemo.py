@@ -5,8 +5,12 @@ import argparse
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("field", help="Field to parse [ip|ua|ref|code|size|url|method]",\
-                        choices=['ip','ua','ref','code','size','url',"method"], nargs='*')
+    parser.add_argument(
+        "field",
+        help="Field to parse [ip|ua|ref|code|size|url|method]",
+        choices=["ip", "ua", "ref", "code", "size", "url", "method"],
+        nargs="*",
+    )
     parser.add_argument("-f", "--file", help="Path to file, default ./access.log")
     parser.add_argument("-s", "--search", help="String to search for", type=str)
     parser.parse_args()
@@ -21,12 +25,13 @@ def main():
         for i in out:
             print(i[0], f"\t{i[1]}")
     else:
-        out: list = lp.count_more(file, args.field)
+        out: list = lp.count_more(file, args.field, args.search)
 
         for line in out:
             for item in range(len(line)):
                 print(f"{line[item]}\t", end="")
             print()
+
 
 if __name__ == "__main__":
     main()

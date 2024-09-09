@@ -24,16 +24,18 @@ class Logparse:
         values: list = []
         try:
             with open(filename) as log_raw:
+                log: list = []
                 if search != None:
-                    log: list = []
                     for line in log_raw:
-                        log.append(lpg.getSearch(search, line))
+                        src = lpg.getSearch(search, line)
+                        if type(src) != type(None):
+                            log.append(src)
+                    if len(log) == 0:
+                        print(f"No match for search: {search}")
                 else:
-                    for line in log_raw:
-                        log.append(line)
+                    log = log_raw
                 match field:
                     case "ip":
-                        print(filename)
                         for line in log:
                             values.append(lpg.getIP(line))
                     case "ua":
@@ -59,32 +61,40 @@ class Logparse:
 
         counted_s: list = Logparse.count_sort(values)
         return counted_s
+        return log
 
     @staticmethod
-    def count_more(filename: str, fields: list) -> list:
+    def count_more(filename: str, fields: list, search: str = None) -> list:
         values: list = []
-        try:
-            with open(filename) as log_raw:
+        with open(filename) as log_raw:
+            log: list = []
+            if search != None:
                 for line in log_raw:
-                    temp: list = []
-                    if "ip" in fields:
-                        temp.append(lpg.getIP(line))
-                    if "method" in fields:
-                        temp.append(lpg.getMethod(line))
-                    if "code" in fields:
-                        temp.append(lpg.getHTTP(line))
-                    if "url" in fields:
-                        temp.append(lpg.getURL(line))
-                    if "ua" in fields:
-                        temp.append(lpg.getUA(line))
-                    if "ref" in fields:
-                        temp.append(lpg.getRef(line))
-                    if "size" in fields:
-                        temp.append(lpg.getSize(line))
-                    values.append(temp)
+                    src = lpg.getSearch(search, line)
+                    if type(src) != type(None):
+                        log.append(src)
+                if len(log) == 0:
+                    print(f"No match for search: {search}")
+            else:
+                log = log_raw
 
-        except FileNotFoundError:
-            print("File not found")
+            for line in log:
+                temp: list = []
+                if "ip" in fields:
+                    temp.append(lpg.getIP(line))
+                if "method" in fields:
+                    temp.append(lpg.getMethod(line))
+                if "code" in fields:
+                    temp.append(lpg.getHTTP(line))
+                if "url" in fields:
+                    temp.append(lpg.getURL(line))
+                if "ua" in fields:
+                    temp.append(lpg.getUA(line))
+                if "ref" in fields:
+                    temp.append(lpg.getRef(line))
+                if "size" in fields:
+                    temp.append(lpg.getSize(line))
+                values.append(temp)
 
         counted_s: list = Logparse.count_sort(values)
         return counted_s
