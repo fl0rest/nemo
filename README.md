@@ -6,4 +6,4 @@ currently, use `python3 nemo.py` to run commands
 
 try `nemo.py -h`
 
-# VERY BROKEN
+## SEARCH NOW WORKS
