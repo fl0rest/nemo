@@ -13,6 +13,7 @@ def main():
     )
     parser.add_argument("-f", "--file", help="Path to file, default ./access.log")
     parser.add_argument("-s", "--search", help="String to search for", type=str)
+    parser.add_argument("-l", "--limit", help="Limit the number of outputs", type=int, required=False)
     parser.parse_args()
     args = parser.parse_args()
 
