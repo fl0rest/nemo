@@ -13,25 +13,58 @@ def main():
     )
     parser.add_argument("-f", "--file", help="Path to file, default ./access.log")
     parser.add_argument("-s", "--search", help="String to search for", type=str)
-    parser.add_argument("-l", "--limit", help="Limit the number of outputs", type=int, required=False)
+    parser.add_argument(
+        "-l",
+        "--limit",
+        help="Limit the number of outputs",
+        type=int,
+        required=False,
+        default=0,
+    )
     parser.parse_args()
     args = parser.parse_args()
 
-    file = "access.log"
+    file: str = "access.log"
     if args.file:
         file = args.file
 
+    limit: int = 0
+    if args.limit > 0:
+        limit = args.limit
+
     if len(args.field) == 1:
         out: list = lp.count_single(file, args.field[0], args.search)
-        for i in out:
-            print(i[0], f"\t{i[1]}")
+
+        match limit:
+            case 0:
+                for i in out:
+                    print(i[0], f"\t{i[1]}")
+            case _:
+                c: int = 0
+                for i in out:
+                    if c == limit:
+                        break
+                    print(i[0], f"\t{i[1]}")
+                    c += 1
+
     else:
         out: list = lp.count_more(file, args.field, args.search)
 
-        for line in out:
-            for item in range(len(line)):
-                print(f"{line[item]}\t", end="")
-            print()
+        match limit:
+            case 0:
+                for line in out:
+                    for item in range(len(line)):
+                        print(f"{line[item]}\t", end="")
+                    print()
+            case _:
+                c: int = 0
+                for line in out:
+                    if c == limit:
+                        break
+                    for item in range(len(line)):
+                        print(f"{line[item]}\t", end="")
+                    print()
+                    c += 1
 
 
 if __name__ == "__main__":
