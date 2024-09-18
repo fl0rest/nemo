@@ -61,7 +61,6 @@ class Logparse:
 
         counted_s: list = Logparse.count_sort(values)
         return counted_s
-        return log
 
     @staticmethod
     def count_more(filename: str, fields: list, search: str = None) -> list:

@@ -2,7 +2,6 @@ from logparse import Logparse as lp
 from logparse_get import LogparseGet as lpg
 import argparse
 
-
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -16,12 +15,11 @@ def main():
     parser.add_argument(
         "-l",
         "--limit",
-        help="Limit the number of outputs",
+        help="Limit the number of outputs (default: 0)",
         type=int,
         required=False,
         default=0,
     )
-    parser.parse_args()
     args = parser.parse_args()
 
     file: str = "access.log"
