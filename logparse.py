@@ -34,28 +34,27 @@ class Logparse:
                         print(f"No match for search: {search}")
                 else:
                     log = log_raw
-                match field:
-                    case "ip":
-                        for line in log:
-                            values.append(lpg.getIP(line))
-                    case "ua":
-                        for line in log:
-                            values.append(lpg.getUA(line))
-                    case "ref":
-                        for line in log:
-                            values.append(lpg.getRef(line))
-                    case "code":
-                        for line in log:
-                            values.append(lpg.getHTTP(line))
-                    case "size":
-                        for line in log:
-                            values.append(lpg.getSize(line))
-                    case "url":
-                        for line in log:
-                            values.append(lpg.getURL(line))
-                    case "method":
-                        for line in log:
-                            values.append(lpg.getMethod(line))
+                if field == "ip":
+                    for line in log:
+                        values.append(lpg.getIP(line))
+                elif field == "ua":
+                    for line in log:
+                        values.append(lpg.getUA(line))
+                elif field == "ref":
+                    for line in log:
+                        values.append(lpg.getRef(line))
+                elif field == "code":
+                    for line in log:
+                        values.append(lpg.getHTTP(line))
+                elif field == "size":
+                    for line in log:
+                        values.append(lpg.getSize(line))
+                elif field == "url":
+                    for line in log:
+                        values.append(lpg.getURL(line))
+                elif field == "method":
+                    for line in log:
+                        values.append(lpg.getMethod(line))
         except FileNotFoundError:
             print("File", filename, "not found")
 
