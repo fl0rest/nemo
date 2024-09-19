@@ -2,6 +2,7 @@ from logparse import Logparse as lp
 from logparse_get import LogparseGet as lpg
 import argparse
 
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -30,39 +31,23 @@ def main():
     if args.limit > 0:
         limit = args.limit
 
-    if len(args.field) == 1:
-        out: list = lp.count(file, args.field[0], args.search)
+    out: list = lp.count(file, args.field, args.search)
 
-        match limit:
-            case 0:
-                for i in out:
-                    print(i[0], f"\t{i[1]}")
-            case _:
-                c: int = 0
-                for i in out:
-                    if c == limit:
-                        break
-                    print(i[0], f"\t{i[1]}")
-                    c += 1
-
-    else:
-        out: list = lp.count(file, args.field, args.search)
-
-        match limit:
-            case 0:
-                for line in out:
-                    for item in range(len(line)):
-                        print(f"{line[item]}\t", end="")
-                    print()
-            case _:
-                c: int = 0
-                for line in out:
-                    if c == limit:
-                        break
-                    for item in range(len(line)):
-                        print(f"{line[item]}\t", end="")
-                    print()
-                    c += 1
+    match limit:
+        case 0:
+            for line in out:
+                for item in range(len(line)):
+                    print(f"{line[item]}\t", end="")
+                print()
+        case _:
+            c: int = 0
+            for line in out:
+                if c == limit:
+                    break
+                for item in range(len(line)):
+                    print(f"{line[item]}\t", end="")
+                print()
+                c += 1
 
 
 if __name__ == "__main__":
