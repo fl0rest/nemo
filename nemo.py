@@ -31,7 +31,7 @@ def main():
         limit = args.limit
 
     if len(args.field) == 1:
-        out: list = lp.count_single(file, args.field[0], args.search)
+        out: list = lp.count(file, args.field[0], args.search)
 
         match limit:
             case 0:
@@ -46,7 +46,7 @@ def main():
                     c += 1
 
     else:
-        out: list = lp.count_more(file, args.field, args.search)
+        out: list = lp.count(file, args.field, args.search)
 
         match limit:
             case 0:
