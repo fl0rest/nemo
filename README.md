@@ -7,12 +7,6 @@ A tool for parsing Apache logs easily
 
 
 - Adding a TUI on top of existing functionality
-## Features
-
-- Light/dark mode toggle
-- Live previews
-- Fullscreen mode
-- Cross platform
 
 
 ## Installation
