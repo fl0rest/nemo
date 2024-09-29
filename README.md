@@ -3,6 +3,9 @@
 
 A tool for parsing Apache logs easily
 
+Works best with the following apache log format
+`LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"" combined`
+
 ## Roadmap
 
 
