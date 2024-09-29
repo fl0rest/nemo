@@ -3,6 +3,8 @@ from logparse_get import LogparseGet as lpg
 
 class Logparse:
 
+    total: float = 0
+
     @staticmethod
     def count_sort(input: list) -> list:
         counted: list = []
@@ -22,6 +24,7 @@ class Logparse:
     @staticmethod
     def count(filename: str, fields: list, search: str = None) -> list:
         values: list = []
+        some: int = 0
         try:
             with open(filename) as log_raw:
                 log: list = []
@@ -51,9 +54,15 @@ class Logparse:
                         temp.append(lpg.getRef(line))
                     if "size" in fields:
                         temp.append(lpg.getSize(line))
+                    if "totalSize" in fields:
+                        Logparse.totalSize(lpg.getSize(line))
                     values.append(temp)
         except FileNotFoundError:
             print("File", filename, "not found")
 
         counted_s: list = Logparse.count_sort(values)
         return counted_s
+
+    @staticmethod
+    def totalSize(size:int) -> None:
+        Logparse.total += size

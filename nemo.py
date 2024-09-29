@@ -1,5 +1,4 @@
 from logparse import Logparse as lp
-from logparse_get import LogparseGet as lpg
 import argparse
 
 
@@ -7,8 +6,8 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "field",
-        help="Field to parse [ip|ua|ref|code|size|url|method]",
-        choices=["ip", "ua", "ref", "code", "size", "url", "method"],
+        help="Field to parse [ip|ua|ref|code|size|url|method|totalSize]",
+        choices=["ip", "ua", "ref", "code", "size", "url", "method", "totalSize"],
         nargs="*",
     )
     parser.add_argument("-f", "--file", help="Path to file, default ./access.log")
@@ -48,6 +47,8 @@ def main():
                     print(f"{line[item]}\t", end="")
                 print()
                 c += 1
+    if "totalSize" in args.field:
+        print(f'Total traffic: {lp.total / 1024:.2f}Kb')
 
 
 if __name__ == "__main__":
