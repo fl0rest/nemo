@@ -48,7 +48,7 @@ def main():
                 print()
                 c += 1
     if "totalSize" in args.field:
-        print(f'Total traffic: {lp.total / 1024:.2f}Kb')
+        print(f'Total traffic: {lp.total / 1024:.2f}KB')
 
 
 if __name__ == "__main__":
