@@ -2,11 +2,21 @@ from logparse_get import LogparseGet as lpg
 
 
 class Logparse:
+    """
+    A class with functions for parsing log entries
+    """
 
-    total: float = 0
+    totalSize: float = 0
 
     @staticmethod
     def count_sort(input: list) -> list:
+        """
+        Counts and sorts a list
+        :param input: A unsorted and uncouinted list
+        :type input: list
+        :return: A counted and sorted list
+        :rtype: list
+        """
         counted: list = []
         for item in input:
             times: int = input.count(item)
@@ -22,19 +32,29 @@ class Logparse:
         return counted_s
 
     @staticmethod
-    def count(filename: str, fields: list, search: str = None) -> list:
+    def grab(filename: str, fields: list, search: str = None) -> list:
+        """
+            Grabs the specified field from all log entries in a file, counts and sorts them
+
+            :param filename: name of the file
+            :type filename: str
+            :param fields: the field(s) to look for
+            :type fields: list
+            :param search: a pattern to RegEX for in the log entries
+            :type search: str
+            :return: A counted and sorted list
+            :rtype: list
+        """
         values: list = []
         some: int = 0
         try:
+            log: list = []
             with open(filename) as log_raw:
-                log: list = []
                 if search != None:
                     for line in log_raw:
                         src = lpg.getSearch(search, line)
                         if type(src) != type(None):
                             log.append(src)
-                    if len(log) == 0:
-                        print(f"No match for search: {search}")
                 else:
                     log = log_raw
 
@@ -64,5 +84,9 @@ class Logparse:
         return counted_s
 
     @staticmethod
-    def totalSize(size:int) -> None:
+    def totalSize(size: float) -> None:
+        """
+        :param size:
+        :type size: float
+        """
         Logparse.total += size

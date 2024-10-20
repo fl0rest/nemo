@@ -30,7 +30,7 @@ def main():
     if args.limit > 0:
         limit = args.limit
 
-    out: list = lp.count(file, args.field, args.search)
+    out: list = lp.grab(file, args.field, args.search)
 
     match limit:
         case 0:
