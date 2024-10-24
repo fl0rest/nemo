@@ -23,7 +23,7 @@ class LogparseGet:
         return ua
 
     @staticmethod
-    def getHTTP(input: str) -> str:
+    def getHTTP(input: str) -> int:
         code = input.split('"')[2].strip()
         code = code.split()[0]
         return int(code)

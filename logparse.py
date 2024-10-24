@@ -1,6 +1,58 @@
 from logparse_get import LogparseGet as lpg
 
 
+class Data:
+    totalSize: float = 0
+
+    def __init__(self, raw: str):
+        self.raw: str = raw
+        self.ip: str = lpg.getIP(raw)
+        self.ua: str = lpg.getUA(raw)
+        self.code: int = lpg.getHTTP(raw)
+        self.ref: str = lpg.getRef(raw)
+        self.size: int = lpg.getSize(raw)
+        self.method: str = lpg.getMethod(raw)
+        self.url: str = lpg.getURL(raw)
+        Data.totalSize += self.size
+
+    def __str__(self):
+        return f"\tIP: {self.ip}\n\
+        UA: {self.ua}\n\
+        Response Code: {self.code}\n\
+        Referrer: {self.ref}\n\
+        Size(b): {self.size}\n\
+        REST Method: {self.method}\n\
+        Requested URL: {self.url}"
+
+    @staticmethod
+    def populate(filename: str, search: str = None) -> list:
+        try:
+            with open(filename, "r") as log_raw:
+                log: list = []
+                if search != None:
+                    for line in log_raw:
+                        src = lpg.getSearch(search, line)
+                        if type(src) != type(None):
+                            log.append(src)
+                        if len(log) == 0:
+                            return f"No match for search: {search}"
+                else:
+                    log = log_raw.readlines()
+
+                entry: list = []
+                for line in log:
+                    entry.append(Data(line))
+                return entry
+
+        except FileNotFoundError:
+            return f"File {filename} was not found"
+
+    @staticmethod
+    def sort(list: list):
+        list.sort(key=lambda data: data.ip)
+        pass
+
+
 class Logparse:
     """
     A class with functions for parsing log entries
@@ -46,7 +98,6 @@ class Logparse:
             :rtype: list
         """
         values: list = []
-        some: int = 0
         try:
             log: list = []
             with open(filename) as log_raw:
@@ -58,6 +109,7 @@ class Logparse:
                 else:
                     log = log_raw
 
+                values = []
                 for line in log:
                     temp: list = []
                     if "ip" in fields:
