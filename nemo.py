@@ -1,4 +1,4 @@
-from logparse import Logparse as lp
+from utils.logparse import DataRaw
 import argparse
 
 
@@ -30,7 +30,8 @@ def main():
     if args.limit > 0:
         limit = args.limit
 
-    out: list = lp.grab(file, args.field, args.search)
+    out: list = DataRaw.populate(file, args.search)
+    DataRaw.sort(out)
 
     match limit:
         case 0:
